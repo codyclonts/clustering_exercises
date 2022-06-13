@@ -10,7 +10,7 @@ import numpy as np
 import scipy.stats as stats
 
 # Visualizing
-%matplotlib inline
+
 import matplotlib.pyplot as plt
 import seaborn as sns
 
@@ -52,9 +52,11 @@ def get_zillow_data():
 
 def handle_missing_values(df, prop_required_column = .5, prop_required_row = .75):
     threshold = int(round(prop_required_column * len(df.index), 0))
-    df.dropna(axis=1, thresh = threshold, inpolace = True)
-    threshold = int(round(prop_requred_row * len(df.columns), 0))
+    df.dropna(axis=1, thresh = threshold, inplace = True)
+    threshold = int(round(prop_required_row * len(df.columns), 0))
     df.dropna(axis = 0, thresh = threshold, inplace = True)
+    return df
+    
 
 
 
@@ -66,3 +68,15 @@ def split_zillow_data(df):
     train, validate = train_test_split(train_validate, test_size=.3, 
         random_state=123)
     return train, validate, test
+
+
+
+
+
+def wrangle_zillow():
+    df =  get_zillow_data()
+    df = handle_missing_values(df, prop_required_column = .9, prop_required_row = .9)
+    return df
+
+
+
